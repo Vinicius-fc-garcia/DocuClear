@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Point, CropState } from '../types';
 import { Check, RotateCcw, ScanLine, MousePointerClick } from 'lucide-react';
 import { detectDocumentEdges } from '../utils/imageProcessing';
