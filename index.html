@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>DocuClear Scanner</title>
     <meta name="description" content="Digitalização de documentos A4" />
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
       
@@ -13,6 +12,7 @@
         font-family: 'Inter', sans-serif;
         background-color: #0f172a; /* Slate 900 */
         color: #f8fafc;
+        margin: 0;
       }
 
       /* Print specific styles to ensure A4 fit */
@@ -49,7 +49,13 @@
         }
       }
     </style>
-  <script type="importmap">
+    <!-- Tailwind via CDN is okay for simple setup, but ideally should be postcss. Keeping it for simplicity if not set up in package.json yet, 
+         but since we are moving to Vite build, let's keep it via CDN for now to avoid complex PostCSS config steps unless requested, 
+         OR rely on the fact that we are building a React app. 
+         Ideally, in a full Vite project, we'd install tailwindcss postcss autoprefixer.
+         For this specific transition, keeping the CDN script is the safest bridge unless we add postcss config files. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+<script type="importmap">
 {
   "imports": {
     "react": "https://aistudiocdn.com/react@^19.2.0",
@@ -61,7 +67,6 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
 </head>
   <body>
     <div id="root"></div>
