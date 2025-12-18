@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
   <head>
@@ -15,7 +16,6 @@
         margin: 0;
       }
 
-      /* Print specific styles to ensure A4 fit */
       @media print {
         @page {
           size: A4;
@@ -30,40 +30,18 @@
         .no-print {
           display: none !important;
         }
-        .print-only {
-          display: flex !important;
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          z-index: 9999;
-          background: white;
-          align-items: center;
-          justify-content: center;
-        }
-        .print-only img {
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
-        }
       }
     </style>
-    <!-- Tailwind via CDN is okay for simple setup, but ideally should be postcss. Keeping it for simplicity if not set up in package.json yet, 
-         but since we are moving to Vite build, let's keep it via CDN for now to avoid complex PostCSS config steps unless requested, 
-         OR rely on the fact that we are building a React app. 
-         Ideally, in a full Vite project, we'd install tailwindcss postcss autoprefixer.
-         For this specific transition, keeping the CDN script is the safest bridge unless we add postcss config files. -->
     <script src="https://cdn.tailwindcss.com"></script>
-<script type="importmap">
+  <script type="importmap">
 {
   "imports": {
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
-    "vite": "https://aistudiocdn.com/vite@^7.2.4",
-    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1"
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
+    "vite": "https://esm.sh/vite@^7.3.0",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
   }
 }
 </script>
