@@ -36,11 +36,15 @@ const ScannerProcessor: React.FC<ScannerProcessorProps> = ({ warpedImageSrc, onB
   const currentPathRef = useRef<Point[]>([]);
 
   useEffect(() => {
+    let isCancelled = false;
+
     const process = async () => {
       setIsProcessing(true);
       const img = new Image();
       img.src = warpedImageSrc;
       await new Promise((r) => (img.onload = r));
+
+      if (isCancelled) return;
 
       const canvas = canvasRef.current;
       if (!canvas) return;
@@ -108,8 +112,12 @@ const ScannerProcessor: React.FC<ScannerProcessorProps> = ({ warpedImageSrc, onB
         ctx.lineWidth = path.size;
         ctx.beginPath();
         ctx.moveTo(path.points[0].x, path.points[0].y);
-        for (let i = 1; i < path.points.length; i++) {
-          ctx.lineTo(path.points[i].x, path.points[i].y);
+        if (path.points.length === 1) {
+          ctx.lineTo(path.points[0].x, path.points[0].y);
+        } else {
+          for (let i = 1; i < path.points.length; i++) {
+            ctx.lineTo(path.points[i].x, path.points[i].y);
+          }
         }
         ctx.stroke();
       });
@@ -119,6 +127,7 @@ const ScannerProcessor: React.FC<ScannerProcessorProps> = ({ warpedImageSrc, onB
     };
 
     process();
+    return () => { isCancelled = true; };
   }, [warpedImageSrc, settings]);
 
   const handlePrint = () => {
@@ -245,10 +254,13 @@ const ScannerProcessor: React.FC<ScannerProcessorProps> = ({ warpedImageSrc, onB
   const handlePointerUp = () => {
     if (!isEraserMode || !isDrawing) return;
     setIsDrawing(false);
-    if (currentPathRef.current.length > 0) {
+    
+    const pathPoints = [...currentPathRef.current];
+    
+    if (pathPoints.length > 0) {
       setSettings(prev => ({
         ...prev,
-        eraserPaths: [...prev.eraserPaths, { points: [...currentPathRef.current], size: eraserSize }]
+        eraserPaths: [...prev.eraserPaths, { points: pathPoints, size: eraserSize }]
       }));
     }
     currentPathRef.current = [];
